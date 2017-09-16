@@ -1,0 +1,33 @@
+{
+  "name": "nasdaqbot",
+  "version": "1.0.0",
+  "description": "Easy financial decisions and data visualization through a Facebook Messenger Bot",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jonathanjmak/NasdaqBot.git"
+  },
+  "keywords": [
+    "financial",
+    "decisions",
+    "data",
+    "visualization",
+    "Facebook",
+    "Messenger",
+    "Nasdaq"
+  ],
+  "author": "Jonathan Mak, Ryan Luu, Charles Lu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jonathanjmak/NasdaqBot/issues"
+  },
+  "homepage": "https://github.com/jonathanjmak/NasdaqBot#readme",
+  "dependencies": {
+    "body-parser": "^1.18.1",
+    "express": "^4.15.4",
+    "request": "^2.81.0"
+  }
+}
