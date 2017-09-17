@@ -509,7 +509,7 @@ app.post('/webhook/', function (req, res) {
   	//     for(companyTicker in stock_names) {
 			// if (text === stock_names[companyTicker]) {
 				if (text === 'FB') {
-				sendTextMessage(sender, "You asked for " + text.substring(0, 200)" . Here are some stats on it: oneYearTarget":"190","yearHighLow":"$ 175.49 / $ 113.5535","peRatio":"39.1","earningsPerShare":"$ 4.39","beta":"1.48","currentPrice":"$ 170.88"}"")
+				sendTextMessage(sender, "You asked for " + text.substring(0, 200) + ". Here are some stats on it: oneYearTarget: $190, yearHighLow: $175.49 / $113.5535, P/E Ratio:39.1, earningsPerShare: $4.39, beta: 1.48, currentPrice: $170.88")
 			}
   		    	sendStockMessage(sender, text)
   		    	var found = true;
