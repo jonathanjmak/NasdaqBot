@@ -238,9 +238,9 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const request = require('request')
 
-var Config = require('./config')
-var FB = require('./connectors/facebook')
-var Bot = require('./bot')
+// var Config = require('./config')
+// var FB = require('./connectors/facebook')
+// var Bot = require('./bot')
 
 const FB_VERIFY_TOKEN = process.env.FB_VERIFY_TOKEN;
 const FB_PAGE_ACCESS_TOKEN = process.env.FB_PAGE_ACCESS_TOKEN
