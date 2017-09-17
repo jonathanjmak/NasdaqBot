@@ -452,7 +452,39 @@ app.use(bodyParser.json())
 
 // Index route
 app.get('/', function (req, res) {
-	res.send('Hello world, I am a chat bot')
+	// res.send('Hello world, I am a chat bot')
+	var dataTools=require('./data-request.js');
+    var symbol="GOOG"
+    dataTools.getData(symbol)
+    var data=JSON.parse(localStorage.getItem('myStorage'));
+    
+    //Removes data from local storage
+    localStorage.removeItem('myStorage');
+    
+    //Calculates the moving avg
+    var mAvg=dataTools.movingAverage(data,50);
+
+    //Retrieves the data from the returned array from moving average
+    var moAvg=mAvg[0];
+    var nInt=mAvg[1];
+    var symbol=data.Symbol;
+
+
+    //Debuggable
+    console.log(data.Symbol);
+    console.log(moAvg);
+    //console.log(moAvg.length);
+    //console.log(nInt);
+
+
+    dataTools.webScrape(data.Symbol);
+    var stockInfo=JSON.parse(localStorage.getItem('myInfo'))
+    localStorage.removeItem('myInfo');
+
+    //Debuggable
+    console.log(stockInfo);
+    
+	res.send("Company: "+symbol+"<br>One Year Target ($):" +stockInfo.oneYearTarget+" <br>Year High and Low ($): "+stockInfo.yearHighLow+"<br>PE Ratio: "+stockInfo.peRatio+"<br>Earnings per share ($): "+stockInfo.earningsPerShare+"<br>Beta (Risk) Value: "+stockInfo.beta)
 })
 
 // for Facebook verification
@@ -470,6 +502,7 @@ app.listen(app.get('port'), function() {
 
 
 
+
 app.post('/webhook/', function (req, res) {
     let messaging_events = req.body.entry[0].messaging
     for (let i = 0; i < messaging_events.length; i++) {
@@ -480,7 +513,7 @@ app.post('/webhook/', function (req, res) {
   	     var found = false;
   	//     for(companyTicker in stock_names) {
 			// if (text === stock_names[companyTicker]) {
-				sendTextMessage(sender, "Valid stock ticker received, echo: " + text.substring(0, 200))
+				//sendTextMessage(sender, "Valid stock ticker received, echo: " + text.substring(0, 200))
   		    	sendStockMessage(sender, text)
   		    	var found = true;
   		     	continue
