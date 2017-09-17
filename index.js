@@ -429,18 +429,18 @@ console.log('on init');
 
 //var stock_names = require('./stock_data.json');
 
-var fs = require('fs');
+// var fs = require('fs');
 
-fs.readFile('/stock_data.json', 'utf8', function (err, data) {
-    if (err) throw err; // we'll not consider error handling for now
-    var obj = JSON.parse(data);
-    console.log(obj);
-});
+// fs.readFile('/stock_data.json', 'utf8', function (err, data) {
+//     if (err) throw err; // we'll not consider error handling for now
+//     var obj = JSON.parse(data);
+//     console.log(obj);
+// });
 
-console.log('This is after the read call');  
+// console.log('This is after the read call');  
 
 
-var companyTicker = [];
+// var companyTicker = [];
 
 app.set('port', (process.env.PORT || 5000))
 
@@ -477,15 +477,16 @@ app.post('/webhook/', function (req, res) {
       let sender = event.sender.id
       if (event.message && event.message.text) {
   	    let text = event.message.text
-  	    var found = false;
-  	    for(companyTicker in stock_names) {
-			if (text === stock_names[companyTicker]) {
+  	     var found = false;
+  	//     for(companyTicker in stock_names) {
+			// if (text === stock_names[companyTicker]) {
 				sendTextMessage(sender, "Valid stock ticker received, echo: " + text.substring(0, 200))
   		    	sendStockMessage(sender, text)
   		    	var found = true;
   		     	continue
-			}
-		} else if (!found) {
+			//}
+		//} 
+		if (!found) {
 			sendTextMessage(sender, "Invalid stock ticker. Please enter another one.")
 		}
   	    // if (text === 'Generic') {
