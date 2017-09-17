@@ -507,11 +507,34 @@ function sendStockMessage(sender, text) {
 				    "buttons": [{
 					    "type": "web_url",
 					    "url": "http://www.nasdaq.com/symbol/" + text,
-					    "title": text.toUpperCase() + " NASDAQ Statistics"
+					    "title": text.toUpperCase() + "Statistics"
 				    }, {
-					    "type": "postback",
-					    "title": "More Info",
-					    "payload": "Payload for first element in a generic bubble",
+					    "type": "element_share",
+					     "share_contents": { 
+        					"attachment": {
+          						"type": "template",
+          							"payload": {
+            							"template_type": "generic",
+            							"elements": [
+              							{
+                							"title": "Should you buy " + text.toUpperCase() + "?",
+                							"image_url": "https://bot.peters-hats.com/img/hats/fez.jpg",
+                							"default_action": {
+                  								"type": "web_url",
+                  								"url": "http://www.nasdaq.com/symbol/" + text
+                						},
+                		"buttons": [
+                  		{
+                    		"type": "web_url",
+                    		"url": "https://m.me/nasdaqbot", 
+                    		"title": "Check out the NASDAQ Bot"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
 				    }],
 			    }, {
 				    "title": "Second card",
