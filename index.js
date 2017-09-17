@@ -509,8 +509,9 @@ function sendStockMessage(sender, text) {
 					    "url": "http://www.nasdaq.com/symbol/" + text,
 					    "title": "More Info"
 				    }, {
-					    "type": "element_share",
-					    "title": "Share to friends"
+					    "type": "postback",
+					    "title": "More Info",
+					    "payload": "Payload for first element in a generic bubble",
 				    }],
 			    }], {
 				    "title": "Second card",
