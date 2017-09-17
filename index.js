@@ -279,7 +279,7 @@ app.post('/webhooks', function (req, res) {
   var entry = FB.getMessageEntry(req.body)
   if (entry && entry.message) {
       Bot.read(entry.sender.id, entry.message.text, function (sender, reply) {
-      FB.newMessage(sender, reply)
+      	FB.newMessage(sender, reply)
       })
     }
   }

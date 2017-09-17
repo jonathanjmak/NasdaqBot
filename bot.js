@@ -32,7 +32,7 @@ var findOrCreateSession = function (fbid) {
 }
 
 var read = function (sender, message, reply) {
-	if (message === 'hello') || (message === 'hey') || (message === 'hi') {
+	if ((message === 'hello') || (message === 'hey') || (message === 'hi')) {
 		// reply to initial greetings
 		message = "Hello! I am a NASDAQ bot to help you get introduced to the market. Give me any stock ticker, and I'll tell you some general sentiments in the market for it. For example, type 'Should I buy TSLA?'"
 		reply(sender, message)
