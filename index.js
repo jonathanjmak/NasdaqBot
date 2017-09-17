@@ -275,41 +275,46 @@ app.get('/webhook/', function (req, res) {
 })
 
 // send to FB
-app.post('/webhooks', function (req, res) {
-  var entry = FB.getMessageEntry(req.body)
-  if (entry && entry.message) {
-      Bot.read(entry.sender.id, entry.message.text, function (sender, reply) {
-      	FB.newMessage(sender, reply)
-      })
-    }
-  }
-
-  res.sendStatus(200)
-})
-
-// app.post('/webhook/', function (req, res) {
-// 	var entry = FB.getMessageEntry(req.body)
-//     let messaging_events = req.body.entry[0].messaging
-//     for (let i = 0; i < messaging_events.length; i++) {
-//       let event = req.body.entry[0].messaging[i]
-//       let sender = event.sender.id
-//       if (event.message && event.message.text) {
-//   	    let text = event.message.text
-//   	    sendTextMessage(sender, "Wit received, echo: " + text.substring(0,200))
-//   	    //if (text === 'AAPL') {
-//   		    displayStockMessage(sender, text)
-//   		    continue
-//   	    //}
-//   	    //sendTextMessage(sender, "Wit received, echo: " + text.substring(0, 200))
-//       }
-//       if (event.postback) {
-//   	    let text = JSON.stringify(event.postback)
-//   	    sendTextMessage(sender, "Postback received: "+text.substring(0, 200), token)
-//   	    continue
-//       }
+// app.post('/webhooks', function (req, res) {
+//   var entry = FB.getMessageEntry(req.body)
+//   if (entry && entry.message) {
+//       Bot.read(entry.sender.id, entry.message.text, function (sender, reply) {
+//       	FB.newMessage(sender, reply)
+//       })
 //     }
-//     res.sendStatus(200)
-//   })
+//   }
+
+//   res.sendStatus(200)
+// })
+
+app.post('/webhook/', function (req, res) {
+	var entry = FB.getMessageEntry(req.body)
+    let messaging_events = req.body.entry[0].messaging
+    for (let i = 0; i < messaging_events.length; i++) {
+      let event = req.body.entry[0].messaging[i]
+      let sender = event.sender.id
+      if (event.message && event.message.text) {
+  	    let text = event.message.text
+  	    if ((message === 'hello') || (message === 'hey') || (message === 'hi')) {
+		// reply to initial greetings
+		message = "Hello! I am a NASDAQ bot to help you get introduced to the market. Give me any stock ticker, and I'll tell you some general sentiments in the market for it. For example, type 'Should I buy TSLA?'"
+		reply(sender, message)
+
+  	    sendTextMessage(sender, "Wit received, echo: " + text.substring(0,200))
+  	    //if (text === 'AAPL') {
+  		    displayStockMessage(sender, text)
+  		    continue
+  	    //}
+  	    //sendTextMessage(sender, "Wit received, echo: " + text.substring(0, 200))
+      }
+      if (event.postback) {
+  	    let text = JSON.stringify(event.postback)
+  	    sendTextMessage(sender, "Postback received: "+text.substring(0, 200), token)
+  	    continue
+      }
+    }
+    res.sendStatus(200)
+  })
 
 
 function sendTextMessage(sender, text) {
