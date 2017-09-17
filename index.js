@@ -454,7 +454,7 @@ app.use(bodyParser.json())
 app.get('/', function (req, res) {
 	// res.send('Hello world, I am a chat bot')
 	var dataTools=require('./data-request.js');
-    var symbol="GOOG"
+    var symbol="AAPL"
     dataTools.getData(symbol)
     var data=JSON.parse(localStorage.getItem('myStorage'));
     
