@@ -507,22 +507,21 @@ function sendStockMessage(sender, text) {
 				    "buttons": [{
 					    "type": "web_url",
 					    "url": "http://www.nasdaq.com/symbol/" + text,
-					    "title": "web url"
+					    "title": text.toUpperCase() + " NASDAQ Page"
 				    }, {
-					    "type": "postback",
-					    "title": "Postback",
-					    "payload": "Payload for first element in a generic bubble",
+					    "type": "element_share",
+					    "title": "Share to friends",
 				    }],
 			    }], //{
-				   //  "title": "Second card",
-				   //  "subtitle": "Element #2 of an hscroll",
-				   //  "image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
-				   //  "buttons": [{
-					  //   "type": "postback",
-					  //   "title": "Postback",
-					  //   "payload": "Payload for second element in a generic bubble",
-				   //  }],
-			    // }]
+				    "title": "Second card",
+				    "subtitle": "Element #2 of an hscroll",
+				    "image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
+				    "buttons": [{
+					    "type": "postback",
+					    "title": "Postback",
+					    "payload": "Payload for second element in a generic bubble",
+				    }],
+			    }]
 		    }
 	    }
     }
