@@ -325,7 +325,7 @@ function displayStockMessage(sender, text) {
 			    "elements": [{
 					"title": text,
 				    "subtitle": "BULLISH/BEARISH",
-				    "image_url": //"http://cdn.osxdaily.com/wp-content/uploads/2010/10/giant-apple-logo-bw.png" INDICATOR,
+				    "image_url": "http://cdn.osxdaily.com/wp-content/uploads/2010/10/giant-apple-logo-bw.png",
 				    "buttons": [{
 					    "type": "web_url",
 					    "url": "http://www.nasdaq.com/symbol/" + text,
