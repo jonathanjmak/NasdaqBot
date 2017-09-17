@@ -503,7 +503,7 @@ function sendStockMessage(sender, text) {
 			    "elements": [{
 					"title": text.toUpperCase(),
 				    "subtitle": "BEARISH/BULLISH",
-				    "image_url": "http://messengerdemo.parseapp.com/img/rift.png",
+				    "image_url": "http://cdn.osxdaily.com/wp-content/uploads/2010/10/giant-apple-logo-bw.png",
 				    "buttons": [{
 					    "type": "web_url",
 					    "url": "http://www.nasdaq.com/symbol/" + text,
