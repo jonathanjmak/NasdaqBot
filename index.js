@@ -322,16 +322,16 @@ function sendGenericMessage(sender) {
 		    "payload": {
 				"template_type": "generic",
 			    "elements": [{
-					"title": "First card",
-				    "subtitle": "Element #1 of an hscroll",
+					"title": "AAPL",
+				    "subtitle": "APPLE STOCK",
 				    "image_url": "http://cdn.osxdaily.com/wp-content/uploads/2010/10/giant-apple-logo-bw.png",
 				    "buttons": [{
 					    "type": "web_url",
-					    "url": "https://www.apple.com",
+					    "url": "http://www.nasdaq.com/symbol/aapl",
 					    "title": "AAPL"
 				    }, {
 					    "type": "postback",
-					    "title": "Postback",
+					    "title": "More Info",
 					    "payload": "Payload for first element in a generic bubble",
 				    }],
 			    }, {
