@@ -425,6 +425,8 @@ const app = express()
 const FB_VERIFY_TOKEN = process.env.FB_VERIFY_TOKEN;
 const FB_PAGE_ACCESS_TOKEN = process.env.FB_PAGE_ACCESS_TOKEN
 
+console.log('on init');
+
 //var stock_names = require('./stock_data.json');
 
 var fs = require('fs');
