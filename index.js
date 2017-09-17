@@ -1,11 +1,28 @@
 'use strict'
 
 const express = require('express')
+const crypto = require('crypto');
 const bodyParser = require('body-parser')
 const request = require('request')
+const fetch = require('node-fetch');
 const app = express()
 
+let Wit = null;
+let log = null;
+try {
+  // if running from repo
+  Wit = require('../').Wit;
+  log = require('../').log;
+} catch (e) {
+  Wit = require('node-wit').Wit;
+  log = require('node-wit').log;
+}
+
 app.set('port', (process.env.PORT || 5000))
+
+const WIT_TOKEN = process.env.WIT_TOKEN;
+const FB_PAGE_ACCESS_TOKEN = process.env.FB_PAGE_ACCESS_TOKEN;
+const FB_VERIFY_TOKEN = process.env.FB_VERIFY_TOKEN;
 
 // Process application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({extended: false}))
@@ -18,9 +35,101 @@ app.get('/', function (req, res) {
 	res.send('Hello world, I am a chat bot')
 })
 
+const fbMessage = (id, text) => {
+  const body = JSON.stringify({
+    recipient: { id },
+    message: { text },
+  });
+  const qs = 'access_token=' + encodeURIComponent(FB_PAGE_TOKEN);
+  return fetch('https://graph.facebook.com/me/messages?' + qs, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body,
+  })
+  .then(rsp => rsp.json())
+  .then(json => {
+    if (json.error && json.error.message) {
+      throw new Error(json.error.message);
+    }
+    return json;
+  });
+};
+
+// ----------------------------------------------------------------------------
+// Wit.ai bot specific code
+
+// This will contain all user sessions.
+// Each session has an entry:
+// sessionId -> {fbid: facebookUserId, context: sessionState}
+const sessions = {};
+
+const findOrCreateSession = (fbid) => {
+  let sessionId;
+  // Let's see if we already have a session for the user fbid
+  Object.keys(sessions).forEach(k => {
+    if (sessions[k].fbid === fbid) {
+      // Yep, got it!
+      sessionId = k;
+    }
+  });
+  if (!sessionId) {
+    // No session found for user fbid, let's create a new one
+    sessionId = new Date().toISOString();
+    sessions[sessionId] = {fbid: fbid, context: {}};
+  }
+  return sessionId;
+};
+
+// Our bot actions
+const actions = {
+  send({sessionId}, {text}) {
+    // Our bot has something to say!
+    // Let's retrieve the Facebook user whose session belongs to
+    const recipientId = sessions[sessionId].fbid;
+    if (recipientId) {
+      // Yay, we found our recipient!
+      // Let's forward our bot response to her.
+      // We return a promise to let our bot know when we're done sending
+      return fbMessage(recipientId, text)
+      .then(() => null)
+      .catch((err) => {
+        console.error(
+          'Oops! An error occurred while forwarding the response to',
+          recipientId,
+          ':',
+          err.stack || err
+        );
+      });
+    } else {
+      console.error('Oops! Couldn\'t find user for session:', sessionId);
+      // Giving the wheel back to our bot
+      return Promise.resolve()
+    }
+  },
+  // You should implement your custom actions here
+  // See https://wit.ai/docs/quickstart
+};
+
+// Setting up our bot
+const wit = new Wit({
+  accessToken: WIT_TOKEN,
+  actions,
+  logger: new log.Logger(log.INFO)
+});
+
+// Starting our webserver and putting it all together
+app.use(({method, url}, rsp, next) => {
+  rsp.on('finish', () => {
+    console.log(`${rsp.statusCode} ${method} ${url}`);
+  });
+  next();
+});
+app.use(bodyParser.json({ verify: verifyRequestSignature }));
+
+
 // for Facebook verification
 app.get('/webhook/', function (req, res) {
-	if (req.query['hub.verify_token'] === 'my_voice_is_my_password_verify_me') {
+	if (req.query['hub.verify_token'] === FB_VERIFY_TOKEN) {
 		console.log("Validating webhook");
 		res.status(200).send(req.query['hub.challenge']);
 	}
@@ -38,18 +147,16 @@ app.get('/webhook/', function (req, res) {
   		    sendGenericMessage(sender)
   		    continue
   	    }
-  	    sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
+  	    sendTextMessage(sender, "Wit api response :" + text.substring(0, 200))
       }
       if (event.postback) {
   	    let text = JSON.stringify(event.postback)
-  	    sendTextMessage(sender, "Postback received: "+text.substring(0, 200), token)
+  	    sendTextMessage(sender, "Postback received: "+text.substring(0, 200), FB_PAGE_ACCESS_TOKEN)
   	    continue
       }
     }
     res.sendStatus(200)
   })
-
-const token = process.env.FB_PAGE_ACCESS_TOKEN
 
 // Spin up the server
 app.listen(app.get('port'), function() {
