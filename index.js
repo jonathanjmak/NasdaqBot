@@ -294,20 +294,18 @@ app.get('/webhook/', function (req, res) {
       let sender = event.sender.id
       if (event.message && event.message.text) {
   	    let text = event.message.text
-  	    let text = event.message.text
   	    if ((text === 'hello') || (text === 'hey') || (text === 'hi')) {
 		// reply to initial greetings
-			message = "Hello! I am a NASDAQ bot to help you get introduced to the market. Give me any stock ticker, and I'll tell you some general sentiments in the market for it. For example, type 'Should I buy TSLA?'"
-			reply(sender, message)
+			sendTextMessage(sender, "Hello! I am a NASDAQ bot to help you get introduced to the market. Give me any stock ticker, and I'll tell you some general sentiments in the market for it. For example, type 'Should I buy TSLA?'")
 		} else {
-  		    sendGenericMessage(sender)
+  		    displayStockMessage(sender, text)
   		    continue
   	    }
   	    sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
       }
       if (event.postback) {
   	    let text = JSON.stringify(event.postback)
-  	    sendTextMessage(sender, "Postback received: "+ text.substring(0, 200), FB_PAGE_ACCESS_TOKEN)
+  	    sendTextMessage(sender, "Postback received: " + text.substring(0, 200), FB_PAGE_ACCESS_TOKEN)
   	    continue
       }
     }
