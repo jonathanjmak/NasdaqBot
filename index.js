@@ -507,12 +507,12 @@ function sendStockMessage(sender, text) {
 				    "buttons": [{
 					    "type": "web_url",
 					    "url": "http://www.nasdaq.com/symbol/" + text,
-					    "title": "TEST"
+					    "title": "More Info"
 				    }, {
 					    "type": "element_share",
-					    "title": "Share to friends",
+					    "title": "Share to friends"
 				    }],
-			    }], //{
+			    }], {
 				    "title": "Second card",
 				    "subtitle": "Element #2 of an hscroll",
 				    "image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
