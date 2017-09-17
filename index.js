@@ -298,12 +298,12 @@ app.get('/webhook/', function (req, res) {
 		// // reply to initial greetings
 		// 	sendTextMessage(sender, "Hello! I am a NASDAQ bot to help you get introduced to the market. Give me any stock ticker, and I'll tell you some general sentiments in the market for it. For example, type 'Should I buy TSLA?'")
 		// } else {
-			sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
+			sendTextMessage(sender, "Wit received, echo: " + text.substring(0, 200))
 
   		    displayStockMessage(sender, text)
   		    continue
   	    }
-  	    sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
+  	    // sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
       }
       if (event.postback) {
   	    let text = JSON.stringify(event.postback)
@@ -384,15 +384,15 @@ function displayStockMessage(sender, text) {
 					    "title": "More Info",
 					    "payload": "Payload for first element in a generic bubble",
 				    }],
-			    }, {
-				    "title": "Second card",
-				    "subtitle": "Element #2 of an hscroll",
-				    "image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
-				    "buttons": [{
-					    "type": "postback",
-					    "title": "Postback",
-					    "payload": "Payload for second element in a generic bubble",
-				    }],
+			    // }, {
+				   //  "title": "Second card",
+				   //  "subtitle": "Element #2 of an hscroll",
+				   //  "image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
+				   //  "buttons": [{
+					  //   "type": "postback",
+					  //   "title": "Postback",
+					  //   "payload": "Payload for second element in a generic bubble",
+				   //  }],
 			    }]
 		    }
 	    }
