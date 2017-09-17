@@ -505,20 +505,27 @@ app.post('/webhook/', function (req, res) {
       let sender = event.sender.id
       if (event.message && event.message.text) {
   	    let text = event.message.text
-  	     var found = false;
+  	     // var found = false;
   	//     for(companyTicker in stock_names) {
 			// if (text === stock_names[companyTicker]) {
+				sendTextMessage(sender, "You asked for " + text.substring(0, 200) + ".")
 				if (text === 'FB') {
-				sendTextMessage(sender, "You asked for " + text.substring(0, 200) + ". Here are some stats on it: oneYearTarget: $190, yearHighLow: $175.49 / $113.5535, P/E Ratio:39.1, earningsPerShare: $4.39, beta: 1.48, currentPrice: $170.88")
-			}
+					sendTextMessage(sender, "Here are some stats on FB (Facebook): One Year Target: $190, Year High-Low: $175.49 / $113.55, P/E Ratio: 39.1, Earnings Per Share: $4.39, Beta: 1.48, Current Price: $170.88")
+				}
+				if (text === 'GOOG') {
+					sendTextMessage(sender, "Here are some stats on GOOG (Google/Alphabet Class C): One Year Target: $1050, Year High-Low: $988.25 / $727.54, P/E Ratio: 33.4, Earnings Per Share: $27.55, Beta: 1.32, Current Price: $924.66")
+				}
+				if (text === 'AMZN') {
+					sendTextMessage(sender, "Here are some stats on AMZN (Amazon): One Year Target: $1171, Year High-Low: $1083.31 / $710.10, P/E Ratio: 250.45, Earnings Per Share: $3.94, Beta: 1.53, Current Price: $992.57")
+				}
   		    	sendStockMessage(sender, text)
-  		    	var found = true;
+  		    	// var found = true;
   		     	continue
 			//}
 		//} 
-		if (!found) {
-			sendTextMessage(sender, "Invalid stock ticker. Please enter another one.")
-		}
+		// if (!found) {
+		// 	sendTextMessage(sender, "Invalid stock ticker. Please enter another one.")
+		// }
       }
       if (event.postback) {
   	    let text = JSON.stringify(event.postback)
