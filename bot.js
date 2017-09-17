@@ -37,21 +37,19 @@ var read = function (sender, message, reply) {
 		message = "Hello! I am a NASDAQ bot to help you get introduced to the market. Give me any stock ticker, and I'll tell you some general sentiments in the market for it. For example, type 'Should I buy TSLA?'"
 		reply(sender, message)
 	} else {
-		// Let's find the user
 		var sessionId = findOrCreateSession(sender)
-		// Let's forward the message to the Wit.ai bot engine
-		// This will run all actions until there are no more actions left to do
+		// send to Wit
 		wit.runActions(
-			sessionId, // the user's current session by id
-			message,  // the user's message
-			sessions[sessionId].context, // the user's session state
+			sessionId, // current session by id
+			message,  // user message
+			sessions[sessionId].context, // session state
 			function (error, context) { // callback
 			if (error) {
-				console.log('oops!', error)
+				console.log('Sorry about that!', error)
 			} else {
 				// Wit.ai ran all the actions
 				// Now it needs more messages
-				console.log('Waiting for further messages')
+				console.log('Anything else?')
 
 				// Based on the session state, you might want to reset the session
 				// Example:
@@ -67,20 +65,7 @@ var read = function (sender, message, reply) {
 }
 
 
-
 module.exports = {
 	findOrCreateSession: findOrCreateSession,
 	read: read,
 }
-© 2017 GitHub, Inc.
-Terms
-Privacy
-Security
-Status
-Help
-Contact GitHub
-API
-Training
-Shop
-Blog
-About

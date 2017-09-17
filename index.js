@@ -237,14 +237,23 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const request = require('request')
-const app = express()
+
+var Config = require('./config')
+var FB = require('./connectors/facebook')
+var Bot = require('./bot')
 
 const FB_VERIFY_TOKEN = process.env.FB_VERIFY_TOKEN;
 const FB_PAGE_ACCESS_TOKEN = process.env.FB_PAGE_ACCESS_TOKEN
 
+/** SERVER SETUP **/
 
-
+const app = express()
 app.set('port', (process.env.PORT || 5000))
+
+// Spin up the server
+app.listen(app.get('port'), function() {
+	console.log('running on port', app.get('port'))
+})
 
 // Process application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({extended: false}))
@@ -265,34 +274,42 @@ app.get('/webhook/', function (req, res) {
 	res.send('Error, wrong token')
 })
 
-// Spin up the server
-app.listen(app.get('port'), function() {
-	console.log('running on port', app.get('port'))
+// send to FB
+app.post('/webhooks', function (req, res) {
+  var entry = FB.getMessageEntry(req.body)
+  if (entry && entry.message) {
+      Bot.read(entry.sender.id, entry.message.text, function (sender, reply) {
+      FB.newMessage(sender, reply)
+      })
+    }
+  }
+
+  res.sendStatus(200)
 })
 
-
-app.post('/webhook/', function (req, res) {
-    let messaging_events = req.body.entry[0].messaging
-    for (let i = 0; i < messaging_events.length; i++) {
-      let event = req.body.entry[0].messaging[i]
-      let sender = event.sender.id
-      if (event.message && event.message.text) {
-  	    let text = event.message.text
-  	    sendTextMessage(sender, "Wit received, echo: " + text.substring(0,200))
-  	    //if (text === 'AAPL') {
-  		    displayStockMessage(sender, text)
-  		    continue
-  	    //}
-  	    //sendTextMessage(sender, "Wit received, echo: " + text.substring(0, 200))
-      }
-      if (event.postback) {
-  	    let text = JSON.stringify(event.postback)
-  	    sendTextMessage(sender, "Postback received: "+text.substring(0, 200), token)
-  	    continue
-      }
-    }
-    res.sendStatus(200)
-  })
+// app.post('/webhook/', function (req, res) {
+// 	var entry = FB.getMessageEntry(req.body)
+//     let messaging_events = req.body.entry[0].messaging
+//     for (let i = 0; i < messaging_events.length; i++) {
+//       let event = req.body.entry[0].messaging[i]
+//       let sender = event.sender.id
+//       if (event.message && event.message.text) {
+//   	    let text = event.message.text
+//   	    sendTextMessage(sender, "Wit received, echo: " + text.substring(0,200))
+//   	    //if (text === 'AAPL') {
+//   		    displayStockMessage(sender, text)
+//   		    continue
+//   	    //}
+//   	    //sendTextMessage(sender, "Wit received, echo: " + text.substring(0, 200))
+//       }
+//       if (event.postback) {
+//   	    let text = JSON.stringify(event.postback)
+//   	    sendTextMessage(sender, "Postback received: "+text.substring(0, 200), token)
+//   	    continue
+//       }
+//     }
+//     res.sendStatus(200)
+//   })
 
 
 function sendTextMessage(sender, text) {
