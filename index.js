@@ -1,11 +1,11 @@
 'use strict'
 
-const express = require('express')
+const express = require('express');
 const crypto = require('crypto');
-const bodyParser = require('body-parser')
-const request = require('request')
+const bodyParser = require('body-parser');
+const request = require('request');
 const fetch = require('node-fetch');
-const app = express()
+const app = express();
 
 let Wit = null;
 let log = null;
