@@ -278,6 +278,7 @@ app.post('/webhook/', function (req, res) {
       let sender = event.sender.id
       if (event.message && event.message.text) {
   	    let text = event.message.text
+  	    sendTextMessage(sender, "Wit received, echo: " + text.substring(0,200))
   	    //if (text === 'AAPL') {
   		    displayStockMessage(sender, text)
   		    continue
@@ -323,7 +324,7 @@ function displayStockMessage(sender, text) {
 				"template_type": "generic",
 			    "elements": [{
 					"title": text,
-				    "subtitle": "BULLISH/BEARISH"
+				    "subtitle": "BULLISH/BEARISH",
 				    "image_url": //"http://cdn.osxdaily.com/wp-content/uploads/2010/10/giant-apple-logo-bw.png" INDICATOR,
 				    "buttons": [{
 					    "type": "web_url",
