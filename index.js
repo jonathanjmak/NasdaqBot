@@ -279,7 +279,7 @@ app.post('/webhook/', function (req, res) {
       if (event.message && event.message.text) {
   	    let text = event.message.text
   	    //if (text === 'AAPL') {
-  		    sendGenericMessage(sender, text)
+  		    displayStockMessage(sender, text)
   		    continue
   	    //}
   	    // sendTextMessage(sender, "Wit received, echo: " + text.substring(0, 200))
@@ -315,7 +315,7 @@ function sendTextMessage(sender, text) {
 
 
 /** CARD VIEW FOR GENERIC **/
-function sendGenericMessage(sender, text) {
+function displayStockMessage(sender, text) {
     let messageData = {
 	    "attachment": {
 		    "type": "template",
@@ -323,8 +323,8 @@ function sendGenericMessage(sender, text) {
 				"template_type": "generic",
 			    "elements": [{
 					"title": text,
-				    "subtitle": "APPLE STOCK",
-				    "image_url": "http://cdn.osxdaily.com/wp-content/uploads/2010/10/giant-apple-logo-bw.png",
+				    "subtitle": "BULLISH/BEARISH"
+				    "image_url": //"http://cdn.osxdaily.com/wp-content/uploads/2010/10/giant-apple-logo-bw.png" INDICATOR,
 				    "buttons": [{
 					    "type": "web_url",
 					    "url": "http://www.nasdaq.com/symbol/" + text,
