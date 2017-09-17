@@ -458,8 +458,7 @@ app.get('/', function (req, res) {
     dataTools.getData(symbol)
     var data=JSON.parse(localStorage.getItem('myStorage'));
     
-    //Removes data from local storage
-    localStorage.removeItem('myStorage');
+    
     
     //Calculates the moving avg
     var mAvg=dataTools.movingAverage(data,50);
@@ -469,17 +468,15 @@ app.get('/', function (req, res) {
     var nInt=mAvg[1];
     var symbol=data.Symbol;
 
-
     //Debuggable
     console.log(data.Symbol);
     console.log(moAvg);
     //console.log(moAvg.length);
     //console.log(nInt);
 
-
     dataTools.webScrape(data.Symbol);
     var stockInfo=JSON.parse(localStorage.getItem('myInfo'))
-    localStorage.removeItem('myInfo');
+   
 
     //Debuggable
     console.log(stockInfo);
