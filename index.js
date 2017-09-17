@@ -425,6 +425,9 @@ const app = express()
 const FB_VERIFY_TOKEN = process.env.FB_VERIFY_TOKEN;
 const FB_PAGE_ACCESS_TOKEN = process.env.FB_PAGE_ACCESS_TOKEN
 
+var stock_names = require('./stock_data.json');
+var companyTicker = [];
+
 app.set('port', (process.env.PORT || 5000))
 
 // Process application/x-www-form-urlencoded
@@ -459,10 +462,21 @@ app.post('/webhook/', function (req, res) {
       let sender = event.sender.id
       if (event.message && event.message.text) {
   	    let text = event.message.text
+  	    var found = false;
+  	    for(companyTicker in stock_names) {
+			if (text === stock_names[companyTicker]) {
+				sendTextMessage(sender, "Valid stock ticker received, echo: " + text.substring(0, 200))
+  		    	sendStockMessage(sender, text)
+  		    	var found = true;
+  		     	continue
+			}
+		} else if (!found) {
+			sendTextMessage(sender, "Invalid stock ticker. Please enter another one.")
+		}
   	    // if (text === 'Generic') {
-  	    	sendTextMessage(sender, "Wit received, echo: " + text.substring(0, 200))
-  		    sendStockMessage(sender, text)
-  		    continue
+  	    	// sendTextMessage(sender, "Valid stock ticker received, echo: " + text.substring(0, 200))
+  		    // sendStockMessage(sender, text)
+  		    // continue
   	    // }
       }
       if (event.postback) {
@@ -507,7 +521,7 @@ function sendStockMessage(sender, text) {
 				    "buttons": [{
 					    "type": "web_url",
 					    "url": "http://www.nasdaq.com/symbol/" + text,
-					    "title": text.toUpperCase() + "Statistics"
+					    "title": text.toUpperCase() + " Statistics"
 				    }, {
 					    "type": "element_share",
 					     "share_contents": { 
@@ -527,7 +541,7 @@ function sendStockMessage(sender, text) {
                   		{
                     		"type": "web_url",
                     		"url": "https://m.me/nasdaqbot", 
-                    		"title": "Check out the NASDAQ Bot"
+                    		"title": "Check out the NASDAQ Bot!"
                   }
                 ]
               }
@@ -537,7 +551,7 @@ function sendStockMessage(sender, text) {
       }
 				    }],
 			    }, {
-				    "title": "Second card",
+				    "title": "Summary",
 				    "subtitle": "Element #2 of an hscroll",
 				    "image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
 				    "buttons": [{
