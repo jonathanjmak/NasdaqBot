@@ -579,7 +579,7 @@ function sendStockMessage(sender, text) {
                 							"image_url": "https://bot.peters-hats.com/img/hats/fez.jpg",
                 							"default_action": {
                   								"type": "web_url",
-                  								"url": "https://nasdaq-bot.herokuapp.com/"
+                  								"url": "http://www.nasdaq.com/symbol/" + text
                 						},
                 		"buttons": [
                   		{
@@ -599,9 +599,9 @@ function sendStockMessage(sender, text) {
 				    "subtitle": "Element #2 of an hscroll",
 				    "image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
 				    "buttons": [{
-					    "type": "postback",
-					    "title": "Postback",
-					    "payload": "Payload for second element in a generic bubble",
+					    "type": "web_url",
+					    "url": "https://nasdaq-bot.herokuapp.com/",
+					    "title": "Info Summary"
 				    }],
 			    }]
 		    }
