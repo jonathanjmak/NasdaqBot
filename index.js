@@ -517,11 +517,6 @@ app.post('/webhook/', function (req, res) {
 		if (!found) {
 			sendTextMessage(sender, "Invalid stock ticker. Please enter another one.")
 		}
-  	    // if (text === 'Generic') {
-  	    	// sendTextMessage(sender, "Valid stock ticker received, echo: " + text.substring(0, 200))
-  		    // sendStockMessage(sender, text)
-  		    // continue
-  	    // }
       }
       if (event.postback) {
   	    let text = JSON.stringify(event.postback)
@@ -560,7 +555,7 @@ function sendStockMessage(sender, text) {
 				"template_type": "generic",
 			    "elements": [{
 					"title": text.toUpperCase(),
-				    "subtitle": "BEARISH/BULLISH",
+				    "subtitle": "Should you buy/sell/hold?",
 				    "image_url": "http://www.nasdaqomx.com/static/com-web-sources/logos/nasdaq-logo-share.png",
 				    "buttons": [{
 					    "type": "web_url",
@@ -601,7 +596,7 @@ function sendStockMessage(sender, text) {
 				    "buttons": [{
 					    "type": "web_url",
 					    "url": "https://nasdaq-bot.herokuapp.com/",
-					    "title": "Info Summary"
+					    "title": "View Summary"
 				    }],
 			    }]
 		    }
