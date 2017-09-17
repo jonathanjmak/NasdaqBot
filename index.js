@@ -505,6 +505,7 @@ app.post('/webhook/', function (req, res) {
       let sender = event.sender.id
       if (event.message && event.message.text) {
   	    let text = event.message.text
+  	    text = text.toUpperCase()
   	     // var found = false;
   	//     for(companyTicker in stock_names) {
 			// if (text === stock_names[companyTicker]) {
