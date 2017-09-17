@@ -458,8 +458,6 @@ app.get('/', function (req, res) {
     dataTools.getData(symbol)
     var data=JSON.parse(localStorage.getItem('myStorage'));
     
-    
-    
     //Calculates the moving avg
     var mAvg=dataTools.movingAverage(data,50);
 
@@ -581,7 +579,7 @@ function sendStockMessage(sender, text) {
                 							"image_url": "https://bot.peters-hats.com/img/hats/fez.jpg",
                 							"default_action": {
                   								"type": "web_url",
-                  								"url": "http://www.nasdaq.com/symbol/" + text
+                  								"url": "https://nasdaq-bot.herokuapp.com/"
                 						},
                 		"buttons": [
                   		{
