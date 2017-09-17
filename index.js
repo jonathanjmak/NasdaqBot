@@ -561,7 +561,7 @@ function sendStockMessage(sender, text) {
 			    "elements": [{
 					"title": text.toUpperCase(),
 				    "subtitle": "BEARISH/BULLISH",
-				    "image_url": "http://cdn.osxdaily.com/wp-content/uploads/2010/10/giant-apple-logo-bw.png",
+				    "image_url": "http://www.nasdaqomx.com/static/com-web-sources/logos/nasdaq-logo-share.png",
 				    "buttons": [{
 					    "type": "web_url",
 					    "url": "http://www.nasdaq.com/symbol/" + text,
@@ -576,7 +576,7 @@ function sendStockMessage(sender, text) {
             							"elements": [
               							{
                 							"title": "Should you buy " + text.toUpperCase() + "?",
-                							"image_url": "https://bot.peters-hats.com/img/hats/fez.jpg",
+                							"image_url": "http://www.nasdaqomx.com/static/com-web-sources/logos/nasdaq-logo-share.png",
                 							"default_action": {
                   								"type": "web_url",
                   								"url": "http://www.nasdaq.com/symbol/" + text
@@ -596,8 +596,8 @@ function sendStockMessage(sender, text) {
 				    }],
 			    }, {
 				    "title": "Summary",
-				    "subtitle": "Element #2 of an hscroll",
-				    "image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
+				    "subtitle": "View important points for " + text.toUpperCase(),
+				    "image_url": "http://www.nasdaqomx.com/static/com-web-sources/logos/nasdaq-logo-share.png",
 				    "buttons": [{
 					    "type": "web_url",
 					    "url": "https://nasdaq-bot.herokuapp.com/",
