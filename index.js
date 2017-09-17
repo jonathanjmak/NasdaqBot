@@ -315,7 +315,7 @@ function sendTextMessage(sender, text) {
 }
 
 
-/** CARD VIEW FOR GENERIC **/
+/** CARD VIEW FOR STOCK VIEWS **/
 function displayStockMessage(sender, text) {
     let messageData = {
 	    "attachment": {
