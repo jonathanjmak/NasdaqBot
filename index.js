@@ -425,7 +425,19 @@ const app = express()
 const FB_VERIFY_TOKEN = process.env.FB_VERIFY_TOKEN;
 const FB_PAGE_ACCESS_TOKEN = process.env.FB_PAGE_ACCESS_TOKEN
 
-var stock_names = require('./stock_data.json');
+//var stock_names = require('./stock_data.json');
+
+var fs = require('fs');
+
+fs.readFile('/stock_data.json', 'utf8', function (err, data) {
+    if (err) throw err; // we'll not consider error handling for now
+    var obj = JSON.parse(data);
+    console.log(obj);
+});
+
+console.log('This is after the read call');  
+
+
 var companyTicker = [];
 
 app.set('port', (process.env.PORT || 5000))
@@ -453,6 +465,7 @@ app.get('/webhook/', function (req, res) {
 app.listen(app.get('port'), function() {
 	console.log('running on port', app.get('port'))
 })
+
 
 
 app.post('/webhook/', function (req, res) {
