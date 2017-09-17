@@ -278,12 +278,12 @@ app.post('/webhook/', function (req, res) {
       let sender = event.sender.id
       if (event.message && event.message.text) {
   	    let text = event.message.text
-  	    // sendTextMessage(sender, "Wit received, echo: " + text.substring(0,200))
+  	    sendTextMessage(sender, "Wit received, echo: " + text.substring(0,200))
   	    //if (text === 'AAPL') {
   		    displayStockMessage(sender, text)
   		    continue
   	    //}
-  	    sendTextMessage(sender, "Wit received, echo: " + text.substring(0, 200))
+  	    //sendTextMessage(sender, "Wit received, echo: " + text.substring(0, 200))
       }
       if (event.postback) {
   	    let text = JSON.stringify(event.postback)
