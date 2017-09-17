@@ -507,7 +507,7 @@ function sendStockMessage(sender, text) {
 				    "buttons": [{
 					    "type": "web_url",
 					    "url": "http://www.nasdaq.com/symbol/" + text,
-					    "title": "More Info"
+					    "title": text.toUpperCase() + " NASDAQ Statistics"
 				    }, {
 					    "type": "postback",
 					    "title": "More Info",
