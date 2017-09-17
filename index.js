@@ -294,10 +294,12 @@ app.get('/webhook/', function (req, res) {
       let sender = event.sender.id
       if (event.message && event.message.text) {
   	    let text = event.message.text
-  	    if ((text === 'hello') || (text === 'hey') || (text === 'hi')) {
-		// reply to initial greetings
-			sendTextMessage(sender, "Hello! I am a NASDAQ bot to help you get introduced to the market. Give me any stock ticker, and I'll tell you some general sentiments in the market for it. For example, type 'Should I buy TSLA?'")
-		} else {
+  // 	    if ((text === 'hello') || (text === 'hey') || (text === 'hi')) {
+		// // reply to initial greetings
+		// 	sendTextMessage(sender, "Hello! I am a NASDAQ bot to help you get introduced to the market. Give me any stock ticker, and I'll tell you some general sentiments in the market for it. For example, type 'Should I buy TSLA?'")
+		// } else {
+			sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
+
   		    displayStockMessage(sender, text)
   		    continue
   	    }
