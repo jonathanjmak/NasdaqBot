@@ -76,7 +76,7 @@ app.post('/webhook/', function (req, res) {
 function sendTextMessage(sender, text) {
     let messageData = { text:text }
     request({
-	    url: 'https://graph.facebook.com/v2.6/me/messages',
+	    url: 'https://graph.facebook.com/v2.8/me/nlp_configs?nlp_enabled=$NLP_ENABLED',
 	    qs: {access_token:FB_PAGE_ACCESS_TOKEN},
 	    method: 'POST',
 		json: {
@@ -167,7 +167,7 @@ function sendStockMessage(sender, text) {
     }
 
     request({
-	    url: 'https://graph.facebook.com/v2.6/me/messages',
+	    url: 'https://graph.facebook.com/v2.8/me/nlp_configs?nlp_enabled=$NLP_ENABLED',
 	    qs: {access_token:FB_PAGE_ACCESS_TOKEN},
 	    method: 'POST',
 	    json: {
