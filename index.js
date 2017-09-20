@@ -19,34 +19,9 @@ app.use(bodyParser.json())
 
 // Index route
 app.get('/', function (req, res) {
-	// res.send('Hello world, I am Nashaq!')
-	var dataTools=require('./data-request.js');
-    var symbol="AAPL"
-    dataTools.getData(symbol)
-    var data=JSON.parse(localStorage.getItem('myStorage'));
-    
-    //Calculates the moving avg
-    var mAvg=dataTools.movingAverage(data,50);
-
-    //Retrieves the data from the returned array from moving average
-    var moAvg=mAvg[0];
-    var nInt=mAvg[1];
-    var symbol=data.Symbol;
-
-    //Debuggable
-    console.log(data.Symbol);
-    console.log(moAvg);
-    //console.log(moAvg.length);
-    //console.log(nInt);
-
-    dataTools.webScrape(data.Symbol);
-    var stockInfo=JSON.parse(localStorage.getItem('myInfo'))
-   
-
-    //Debuggable
-    console.log(stockInfo);
-    
-	res.send("Company: "+symbol+"<br>One Year Target ($):" +stockInfo.oneYearTarget+" <br>Year High and Low ($): "+stockInfo.yearHighLow+"<br>PE Ratio: "+stockInfo.peRatio+"<br>Earnings per share ($): "+stockInfo.earningsPerShare+"<br>Beta (Risk) Value: "+stockInfo.beta)
+	
+    var breakdown=getStockData("MSFT");
+    res.send(breakdown);
 })
 
 // for Facebook verification
@@ -72,15 +47,19 @@ app.post('/webhook/', function (req, res) {
   	    let text = event.message.text
   	    text = text.toUpperCase()
 				sendTextMessage(sender, "You asked for " + text.substring(0, 200) + ".")
-				if (text === 'FB') {
-					sendTextMessage(sender, "Here are some stats on FB (Facebook): One Year Target: $190, Year High-Low: $175.49 / $113.55, P/E Ratio: 39.1, Earnings Per Share: $4.39, Beta: 1.48, Current Price: $170.88, 50 Day Moving Average: $154.49") 
+                var response1=getStockData(text);
+                sendTextMessage(sender,response1);
+				/*
+                if (text === 'FB') {
+					sendTextMessage(sender, "Here are some stats on FB (Facebook): One Year Target: $190, Year High-Low: $175.49 / $113.55, P/E Ratio: 39.1, Earnings Per Share: $4.39, Beta: 1.48, Current Price: $170.88, 50 Day Moving Average: $154.49") 
 				}
 				if (text === 'GOOG') {
-					sendTextMessage(sender, "Here are some stats on GOOG (Google/Alphabet Class C): One Year Target: $1050, Year High-Low: $988.25 / $727.54, P/E Ratio: 33.4, Earnings Per Share: $27.55, Beta: 1.32, Current Price: $924.66, 50 Day Moving Average: $941.39") 
+					sendTextMessage(sender, "Here are some stats on GOOG (Google/Alphabet Class C): One Year Target: $1050, Year High-Low: $988.25 / $727.54, P/E Ratio: 33.4, Earnings Per Share: $27.55, Beta: 1.32, Current Price: $924.66, 50 Day Moving Average: $941.39") 
 				}
 				if (text === 'AMZN') {
-					sendTextMessage(sender, "Here are some stats on AMZN (Amazon): One Year Target: $1171, Year High-Low: $1083.31 / $710.10, P/E Ratio: 250.45, Earnings Per Share: $3.94, Beta: 1.53, Current Price: $992.57, 50 Day Moving Average: $988.66") 
+					sendTextMessage(sender, "Here are some stats on AMZN (Amazon): One Year Target: $1171, Year High-Low: $1083.31 / $710.10, P/E Ratio: 250.45, Earnings Per Share: $3.94, Beta: 1.53, Current Price: $992.57, 50 Day Moving Average: $988.66") 
 				}
+          */
   		    	sendStockMessage(sender, text)
   		     	continue
       }
@@ -112,6 +91,24 @@ function sendTextMessage(sender, text) {
 	    }
     })
 }
+
+
+function getStockData(symbol){
+    
+    var sleep=require('system-sleep');
+	var dataTools=require('./data-request.js');
+    var jsonFile=require('jsonfile');
+    var file='./scraped.json';
+    dataTools.webScrape(symbol)
+    var stockInfo=jsonFile.readFileSync(file);
+    
+    //Debuggable
+    console.log(stockInfo);
+    
+	return ("Company: "+symbol+"<br>One Year Target ($):" +stockInfo.oneYearTarget+" <br>Year High and Low ($): "+stockInfo.yearHighLow+"<br>PE Ratio: "+stockInfo.peRatio+"<br>Earnings per share ($): "+stockInfo.earningsPerShare+"<br>Beta (Risk) Value: "+stockInfo.beta);
+    
+}
+
 
 function sendStockMessage(sender, text) {
     let messageData = {
@@ -185,4 +182,3 @@ function sendStockMessage(sender, text) {
 	    }
     })
 }
-

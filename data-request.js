@@ -3,6 +3,7 @@ module.exports={
     
     
 getData: function(symbol){
+    var jsonFile=require('jsonfile')
     var LocalStorage = require('node-localstorage').LocalStorage;
     var WebSocket = require('ws');
     localStorage = new LocalStorage('./scratch2');
@@ -63,7 +64,6 @@ movingAverage: function(data,interval){
     var start=0;
     var end=interval;
     
-    //console.log(data);
     
     while (true){
     
@@ -71,7 +71,7 @@ movingAverage: function(data,interval){
         //Loops through to get each point
         for (i=start;i<end;i++){
             total+=cPrices[i];
-            //console.log(total);
+            console.log(total);
         }
         
         //Increments the starting point
@@ -95,7 +95,7 @@ movingAverage: function(data,interval){
     
     var mAvgData=[mAvg.slice(Math.max(mAvg.length-50,1)),nInt.slice(0,50), symbol];
     
-    //console.log("I am past the moving average")
+    console.log("I am past the moving average")
     return mAvgData;    
     
 },
@@ -103,6 +103,8 @@ movingAverage: function(data,interval){
 webScrape: function(symbol){
     
     //Requires the modules needed for functionality
+    var jsonFile=require('jsonfile')
+    var file="./scraped.json"
     var LocalStorage = require('node-localstorage').LocalStorage;
     localStorage = new LocalStorage('./scratch2');
     
@@ -111,6 +113,7 @@ webScrape: function(symbol){
      const rp=require('request-promise');
     const cheerio=require('cheerio');
     
+    //Configures options for cheerio page loading
     const options= {
         
         uri:"http://www.nasdaq.com/symbol/"+symbol,
@@ -132,22 +135,19 @@ webScrape: function(symbol){
             
         });
         
-        var stats2=$('span').each(function(i,elem){
-           
-            html2.push($(this).text().trim());
-            
-        });
+    
         
-        //Adds keys and values to the stockInfo hashmap
+        //Adds essential investment info to the stockInfo hashmap
         stockInfo.oneYearTarget=html[1];
         stockInfo.yearHighLow=html[6];
         stockInfo.peRatio=html[8];
         stockInfo.earningsPerShare=html[10];
         stockInfo.beta=html[15];
-        //stockInfo.bullBear=html2[12];
+        stockInfo.currentPrice=html[16];
         
-        localStorage.setItem("myInfo",JSON.stringify(stockInfo));
-        //console.log(stockInfo);
+        //Replacing with a write to a JSON file
+        jsonFile.writeFileSync(file,stockInfo);
+        
     })
     .catch((err) => {
         
