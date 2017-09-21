@@ -20,7 +20,7 @@ app.use(bodyParser.json())
 // Index route
 app.get('/', function (req, res) {
 	
-    var breakdown=getStockData("MSFT");
+    var breakdown=getStockData("AMZN");
     res.send(breakdown);
 })
 
