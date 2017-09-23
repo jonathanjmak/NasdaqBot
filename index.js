@@ -95,7 +95,7 @@ function sendTextMessage(sender, text) {
 
 function getStockData(symbol){
     
-    var sleep=require('system-sleep');
+    //var sleep=require('system-sleep');
 	var dataTools=require('./data-request.js');
     var jsonFile=require('jsonfile');
     var file='./scraped.json';
