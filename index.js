@@ -49,17 +49,6 @@ app.post('/webhook/', function (req, res) {
 				sendTextMessage(sender, "You asked for " + text.substring(0, 200) + ".")
                 var response1=getStockData(text);
                 sendTextMessage(sender,response1);
-				/*
-                if (text === 'FB') {
-					sendTextMessage(sender, "Here are some stats on FB (Facebook): One Year Target: $190, Year High-Low: $175.49 / $113.55, P/E Ratio: 39.1, Earnings Per Share: $4.39, Beta: 1.48, Current Price: $170.88, 50 Day Moving Average: $154.49") 
-				}
-				if (text === 'GOOG') {
-					sendTextMessage(sender, "Here are some stats on GOOG (Google/Alphabet Class C): One Year Target: $1050, Year High-Low: $988.25 / $727.54, P/E Ratio: 33.4, Earnings Per Share: $27.55, Beta: 1.32, Current Price: $924.66, 50 Day Moving Average: $941.39") 
-				}
-				if (text === 'AMZN') {
-					sendTextMessage(sender, "Here are some stats on AMZN (Amazon): One Year Target: $1171, Year High-Low: $1083.31 / $710.10, P/E Ratio: 250.45, Earnings Per Share: $3.94, Beta: 1.53, Current Price: $992.57, 50 Day Moving Average: $988.66") 
-				}
-          */
   		    	sendStockMessage(sender, text)
   		     	continue
       }
